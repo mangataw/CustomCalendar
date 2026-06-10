@@ -1,0 +1,5 @@
+icalendar>=6.0.1
+lunar-python>=1.4.0
+chinesecalendar>=1.9.0
+pyyaml>=6.0.1
+astral>=3.2

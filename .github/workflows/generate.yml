@@ -1,0 +1,44 @@
+name: Generate iCal Subscriptions
+
+on:
+  schedule:
+    - cron: '0 0 1 12 *'  # 每年12月1日运行一次
+  workflow_dispatch:      # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run calendar generator
+        run: |
+          python generator.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add dist/*.ics
+          # 仅在有变动时才提交，避免报错
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: auto-update calendar subscriptions"
+            git push
+          else
+            echo "No changes in calendar files. Skipping commit."
+          fi

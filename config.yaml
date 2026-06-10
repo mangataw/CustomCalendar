@@ -1,0 +1,16 @@
+# 日历生成年份跨度配置
+calendar_range:
+  years_backward: 1  # 往回生成几年（默认1年，即去年）
+  years_forward: 2   # 往后生成几年（默认2年，即今年和明年）
+
+# 自定义纪念日列表
+# - date: 月-日 格式 (MM-DD)
+#   title: 纪念日标题
+#   start_year: 开始年份 (选填，若填写则自动计算第几年，例如“结婚纪念日 (第3年)”)
+anniversaries:
+  - date: "06-18"
+    title: "某个重要的纪念日"
+    start_year: 2023
+  - date: "10-24"
+    title: "程序员节"
+    start_year: 2014
